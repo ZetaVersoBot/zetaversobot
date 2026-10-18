@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pannello di Gestione — ZetaVerso</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="min-h-screen flex bg-[#0b0f19]">
+
+    <!-- SIDEBAR NAVIGAZIONE GESTIONE -->
+    <aside class="w-72 glass border-r border-gray-800/60 hidden lg:flex flex-col justify-between p-6 shrink-0">
+        <div>
+            <!-- Header Server Selezionato -->
+            <div id="server-header" class="flex items-center space-x-3 mb-8 p-3 bg-gray-900/80 rounded-2xl border border-gray-800">
+                <div id="guild-avatar" class="w-11 h-11 rounded-xl bg-purple-600 text-white flex items-center justify-center font-bold text-lg shrink-0">
+                    Z
+                </div>
+                <div class="overflow-hidden">
+                    <h4 id="guild-name" class="text-xs font-bold text-white truncate">Caricamento...</h4>
+                    <span id="guild-id" class="text-[10px] text-gray-400 font-mono">ID: ...</span>
+                </div>
+            </div>
+            
+            <p class="text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-3 px-2">Configurazione Moduli</p>
+            <nav class="space-y-1.5 text-sm font-medium">
+                <a href="#wizard" class="flex items-center space-x-3 px-4 py-2.5 rounded-xl font-bold text-white bg-purple-600/20 border border-purple-500/30">
+                    <i class="fas fa-wand-magic-sparkles text-purple-400 w-5"></i>
+                    <span>Setup Guidato</span>
+                </a>
+                <a href="#security" class="flex items-center space-x-3 px-4 py-2.5 rounded-xl text-gray-300 hover:bg-gray-800/50 hover:text-white transition">
+                    <i class="fas fa-shield-virus text-purple-400 w-5"></i>
+                    <span>Security Systems</span>
+                </a>
+                <a href="#ticket" class="flex items-center space-x-3 px-4 py-2.5 rounded-xl text-gray-300 hover:bg-gray-800/50 hover:text-white transition">
+                    <i class="fas fa-ticket text-blue-400 w-5"></i>
+                    <span>Ticket System</span>
+                </a>
+                <a href="#partnership" class="flex items-center space-x-3 px-4 py-2.5 rounded-xl text-gray-300 hover:bg-gray-800/50 hover:text-white transition">
+                    <i class="fas fa-handshake text-emerald-400 w-5"></i>
+                    <span>Partnership System</span>
+                </a>
+            </nav>
+        </div>
+
+        <div>
+            <a href="dashboard.html" class="w-full bg-gray-900 hover:bg-gray-800 text-gray-300 hover:text-white py-3 rounded-xl text-xs font-bold transition flex items-center justify-center space-x-2 border border-gray-800">
+                <i class="fas fa-arrow-left"></i>
+                <span>Torna ai tuoi server</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- CONTENUTO PRINCIPALE -->
+    <main class="flex-grow p-6 md:p-10 overflow-y-auto">
+        
+        <!-- HEADER TOP -->
+        <div class="flex items-center justify-between mb-8 border-b border-gray-800/80 pb-5">
+            <div>
+                <a href="dashboard.html" class="lg:hidden text-xs text-purple-400 font-semibold mb-2 inline-block"><i class="fas fa-arrow-left mr-1"></i> Tutti i server</a>
+                <h1 class="text-2xl md:text-3xl font-extrabold text-white flex items-center">
+                    <i class="fas fa-sliders text-purple-400 mr-3"></i> Gestione ZetaVerso
+                </h1>
+            </div>
+            <div class="flex items-center space-x-3">
+                <span class="text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-3 py-1.5 rounded-full flex items-center">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse mr-2"></span> Bot Connesso
+                </span>
+            </div>
+        </div>
+
+        <!-- WIZARD GUIDE CARD -->
+        <section id="wizard" class="bg-gradient-to-r from-purple-900/40 via-indigo-900/30 to-gray-900/50 border border-purple-500/30 p-6 md:p-8 rounded-3xl mb-10 flex flex-col md:flex-row justify-between items-start md:items-center shadow-xl">
+            <div class="max-w-2xl">
+                <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-purple-500/20 text-purple-300 text-xs font-semibold mb-3">
+                    <i class="fas fa-wand-magic-sparkles"></i>
+                    <span>Wizard Guide Setup</span>
+                </div>
+                <h2 class="text-xl md:text-2xl font-extrabold text-white mb-2">Configura il server in 3 minuti</h2>
+                <p class="text-xs md:text-sm text-gray-300 leading-relaxed">
+                    Una procedura guidata passo passo: tu scegli le tue preferenze, ZetaVerso imposta automaticamente canali, ruoli e permessi corretti per sicurezza, ticket e partnership.
+                </p>
+            </div>
+            <button onclick="startWizard()" class="mt-6 md:mt-0 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold px-6 py-3.5 rounded-2xl transition shadow-lg text-sm shrink-0 glow-purple flex items-center space-x-2">
+                <span>Avvia il setup guidato</span>
+                <i class="fas fa-arrow-right text-xs"></i>
+            </button>
+        </section>
+
+        <!-- MODULI DEL BOT -->
+        <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
+            
+            <!-- SECURITY SYSTEMS (Core) -->
+            <section id="security" class="xl:col-span-2 glass p-6 md:p-8 rounded-3xl border border-purple-500/30">
+                <div class="flex items-center justify-between mb-6 border-b border-gray-800 pb-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-12 h-12 rounded-2xl bg-purple-600/20 text-purple-400 flex items-center justify-center text-xl shrink-0"><i class="fas fa-shield-virus"></i></div>
+                        <div>
+                            <h3 class="text-lg font-bold text-white">Security Systems</h3>
+                            <p class="text-xs text-gray-400">Protezione completa ed avanzata della community</p>
+                        </div>
+                    </div>
+                    <span class="text-xs bg-purple-500/20 text-purple-300 border border-purple-500/30 px-3 py-1 rounded-full font-bold">Modulo Core</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- AntiRaid -->
+                    <div class="bg-gray-900/60 p-4 rounded-2xl border border-gray-800 flex items-center justify-between">
+                        <div>
+                            <h4 class="text-sm font-bold text-white">AntiRaid</h4>
+                            <p class="text-[11px] text-gray-400">Blocca gli ingressi di massa e bot malevoli</p>
+                        </div>
+                        <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+                    </div>
+
+                    <!-- AntiNuke -->
+                    <div class="bg-gray-900/60 p-4 rounded-2xl border border-gray-800 flex items-center justify-between">
+                        <div>
+                            <h4 class="text-sm font-bold text-white">AntiNuke</h4>
+                            <p class="text-[11px] text-gray-400">Protegge ruoli, canali e permessi da staff malevoli</p>
+                        </div>
+                        <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+                    </div>
+
+                    <!-- AntiSpam -->
+                    <div class="bg-gray-900/60 p-4 rounded-2xl border border-gray-800 flex items-center justify-between">
+                        <div>
+                            <h4 class="text-sm font-bold text-white">AntiSpam</h4>
+                            <p class="text-[11px] text-gray-400">Previene lo spam di messaggi ripetitivi</p>
+                        </div>
+                        <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+                    </div>
+
+                    <!-- AntiLink -->
+                    <div class="bg-gray-900/60 p-4 rounded-2xl border border-gray-800 flex items-center justify-between">
+                        <div>
+                            <h4 class="text-sm font-bold text-white">AntiLink</h4>
+                            <p class="text-[11px] text-gray-400">Rimuove inviti Discord e link esterni non autorizzati</p>
+                        </div>
+                        <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+                    </div>
+
+                    <!-- AntiFlame -->
+                    <div class="bg-gray-900/60 p-4 rounded-2xl border border-gray-800 flex items-center justify-between">
+                        <div>
+                            <h4 class="text-sm font-bold text-white">AntiFlame</h4>
+                            <p class="text-[11px] text-gray-400">Filtro automatico per insulti e linguaggio tossico</p>
+                        </div>
+                        <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+                    </div>
+
+                    <!-- AntiPrune -->
+                    <div class="bg-gray-900/60 p-4 rounded-2xl border border-gray-800 flex items-center justify-between">
+                        <div>
+                            <h4 class="text-sm font-bold text-white">AntiPrune</h4>
+                            <p class="text-[11px] text-gray-400">Impedisce l'espulsione di massa degli utenti inattivi</p>
+                        </div>
+                        <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+                    </div>
+
+                    <!-- AntiBot -->
+                    <div class="bg-gray-900/60 p-4 rounded-2xl border border-gray-800 flex items-center justify-between">
+                        <div>
+                            <h4 class="text-sm font-bold text-white">AntiBot</h4>
+                            <p class="text-[11px] text-gray-400">Impedisce l'ingresso di bot non verificati</p>
+                        </div>
+                        <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+                    </div>
+
+                    <!-- JoinGate -->
+                    <div class="bg-gray-900/60 p-4 rounded-2xl border border-gray-800 flex items-center justify-between">
+                        <div>
+                            <h4 class="text-sm font-bold text-white">JoinGate</h4>
+                            <p class="text-[11px] text-gray-400">Verifica obbligatoria all'ingresso per i nuovi membri</p>
+                        </div>
+                        <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+                    </div>
+
+                    <!-- AutoMod -->
+                    <div class="bg-gray-900/60 p-4 rounded-2xl border border-gray-800 flex items-center justify-between md:col-span-2">
+                        <div>
+                            <h4 class="text-sm font-bold text-white">AutoMod Discord Integration</h4>
+                            <p class="text-[11px] text-gray-400">Sincronizzazione diretta con le regole native di moderazione automatica di Discord</p>
+                        </div>
+                        <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+                    </div>
+                </div>
+            </section>
+
+            <!-- COLONNA DESTRA: TICKET & PARTNERSHIP -->
+            <div class="space-y-8">
+                <!-- TICKET SYSTEM -->
+                <section id="ticket" class="glass p-6 md:p-8 rounded-3xl border border-gray-800 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 rounded-2xl bg-blue-600/20 text-blue-400 flex items-center justify-center"><i class="fas fa-ticket"></i></div>
+                                <h3 class="font-bold text-white text-base">Ticket System</h3>
+                            </div>
+                            <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+                        </div>
+                        <p class="text-xs text-gray-400 mb-6 leading-relaxed">
+                            Sistema di supporto avanzato con pannelli trasparenti, pulsanti interattivi e salvataggio transcript in HTML/PDF.
+                        </p>
+                    </div>
+                    <button onclick="alert('Pannello configurazione Ticket aperto')" class="w-full bg-gray-900 hover:bg-gray-800 text-white py-3 rounded-2xl text-xs font-bold transition border border-gray-800">
+                        Configura Modulo Ticket
+                    </button>
+                </section>
+
+                <!-- PARTNERSHIP SYSTEM -->
+                <section id="partnership" class="glass p-6 md:p-8 rounded-3xl border border-gray-800 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 rounded-2xl bg-emerald-600/20 text-emerald-400 flex items-center justify-center"><i class="fas fa-handshake"></i></div>
+                                <h3 class="font-bold text-white text-base">Partnership System</h3>
+                            </div>
+                            <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+                        </div>
+                        <p class="text-xs text-gray-400 mb-6 leading-relaxed">
+                            Modulo pubblico per automatizzare la gestione, il tracciamento e la pubblicazione delle partnership tra server.
+                        </p>
+                    </div>
+                    <button onclick="alert('Pannello configurazione Partnership aperto')" class="w-full bg-gray-900 hover:bg-gray-800 text-white py-3 rounded-2xl text-xs font-bold transition border border-gray-800">
+                        Configura Modulo Partnership
+                    </button>
+                </section>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        // Recupera il parametro guild_id dall'URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const guildId = urlParams.get('guild_id');
+
+        async function initManagePage() {
+            if (!guildId) {
+                alert('Nessun server selezionato.');
+                window.location.href = 'dashboard.html';
+                return;
+            }
+
+            try {
+                const res = await fetch('/api/guilds');
+                if (!res.ok) return window.location.href = 'login.html';
+                
+                const guilds = await res.json();
+                const currentGuild = guilds.find(g => g.id === guildId);
+
+                if (currentGuild) {
+                    document.getElementById('guild-name').innerText = currentGuild.name;
+                    document.getElementById('guild-id').innerText = `ID: ${currentGuild.id}`;
+                    if (currentGuild.icon) {
+                        document.getElementById('guild-avatar').innerHTML = `<img src="${currentGuild.icon}" class="w-full h-full rounded-xl object-cover" />`;
+                    } else {
+                        document.getElementById('guild-avatar').innerText = currentGuild.name.charAt(0);
+                    }
+                }
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        function startWizard() {
+            alert('Avvio del Wizard Setup Guidato per ZetaVerso. Il bot configurerà automaticamente canali, ruoli e sistemi di sicurezza.');
+        }
+
+        initManagePage();
+    </script>
+</body>
+</html>

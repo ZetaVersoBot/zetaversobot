@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard — ZetaVerso</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0b0f19; color: #f3f4f6; }
+        .glass { background: rgba(17, 24, 39, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
+    </style>
+</head>
+<body class="min-h-screen flex bg-[#0b0f19]">
+
+    <!-- SIDEBAR NAVIGAZIONE -->
+    <aside class="w-72 glass border-r border-gray-800/60 hidden md:flex flex-col justify-between p-6">
+        <div>
+            <div class="flex items-center space-x-3 mb-10 cursor-pointer" onclick="window.location.href='/'">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-purple-600 to-indigo-500 flex items-center justify-center font-bold text-xl text-white">Z</div>
+                <span class="text-lg font-extrabold text-white">ZetaVerso</span>
+            </div>
+            
+            <p class="text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-3">Navigazione</p>
+            <nav class="space-y-1 mb-8">
+                <a href="/" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-400 hover:bg-gray-800/50 hover:text-white transition"><i class="fas fa-home w-5"></i><span>Home</span></a>
+                <a href="/dashboard.html" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-bold text-white bg-purple-600/20 border border-purple-500/30 transition"><i class="fas fa-server w-5 text-purple-400"></i><span>Dashboard</span></a>
+            </nav>
+
+            <p class="text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-3">Statistiche</p>
+            <div class="space-y-2 text-xs text-gray-400 bg-gray-900/40 p-4 rounded-xl border border-gray-800">
+                <div class="flex justify-between py-1"><span>Server totali</span><span id="stat-total" class="font-bold text-white">0</span></div>
+                <div class="flex justify-between py-1"><span>ZetaVerso attivo</span><span id="stat-active" class="font-bold text-emerald-400">0</span></div>
+                <div class="flex justify-between py-1"><span>Da invitare</span><span id="stat-invite" class="font-bold text-amber-400">0</span></div>
+            </div>
+        </div>
+
+        <div class="border-t border-gray-800 pt-4 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <img id="user-avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" class="w-9 h-9 rounded-full border border-gray-700" alt="Avatar">
+                <div class="overflow-hidden">
+                    <h4 id="user-name" class="text-xs font-bold text-white truncate">Caricamento...</h4>
+                    <span class="text-[10px] text-emerald-400">Loggato</span>
+                </div>
+            </div>
+            <button onclick="logout()" class="text-gray-400 hover:text-red-400 transition"><i class="fas fa-sign-out-alt"></i></button>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-grow p-8 md:p-12 overflow-y-auto">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+            <div>
+                <h1 class="text-3xl font-extrabold text-white">I tuoi server.</h1>
+                <p class="text-gray-400 text-sm">Scegli un server e continua la configurazione di ZetaVerso.</p>
+            </div>
+        </div>
+
+        <!-- CONTENITORE SERVER DINAMICO -->
+        <div id="guilds-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="col-span-3 text-center py-12 text-gray-500">Caricamento dei server in tempo reale da Discord...</div>
+        </div>
+    </main>
+
+    <script>
+        async function loadDashboard() {
+            try {
+                // Fetch Utente
+                const userRes = await fetch('/api/user');
+                if (!userRes.ok) return window.location.href = '/login.html';
+                const user = await userRes.json();
+                
+                document.getElementById('user-name').innerText = user.username;
+                if (user.avatar) {
+                    document.getElementById('user-avatar').src = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
+                }
+
+                // Fetch Server Reali
+                const guildsRes = await fetch('/api/guilds');
+                const guilds = await guildsRes.json();
+
+                const container = document.getElementById('guilds-container');
+                container.innerHTML = '';
+
+                let activeCount = 0;
+                let inviteCount = 0;
+
+                guilds.forEach(guild => {
+                    if (guild.botPresent) activeCount++;
+                    else inviteCount++;
+
+                    const iconHtml = guild.icon 
+                        ? `<img src="${guild.icon}" class="w-14 h-14 rounded-2xl shadow-lg" />`
+                        : `<div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-purple-600 to-indigo-600 text-white flex items-center justify-center font-bold text-xl">${guild.name.charAt(0)}</div>`;
+
+                    const tagHtml = guild.botPresent
+                        ? `<span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs px-3 py-1 rounded-full font-semibold">Bot Presente</span>`
+                        : `<span class="bg-amber-500/10 text-amber-400 border border-amber-500/20 text-xs px-3 py-1 rounded-full font-semibold">Bot Non Presente</span>`;
+
+                    const buttonHtml = guild.botPresent
+                        ? `<a href="/manage.html?guild_id=${guild.id}" class="w-full bg-purple-600 hover:bg-purple-500 text-white py-3 rounded-xl font-bold text-sm transition shadow-lg text-center block">Gestisci</a>`
+                        : `<a href="${guild.inviteUrl}" target="_blank" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white py-3 rounded-xl font-bold text-sm transition shadow-lg text-center block"><i class="fas fa-plus mr-1"></i> Invita ZetaVerso</a>`;
+
+                    container.innerHTML += `
+                        <div class="glass p-6 rounded-2xl border ${guild.botPresent ? 'border-purple-500/30' : 'border-gray-800'} flex flex-col justify-between">
+                            <div>
+                                <div class="flex justify-between items-start mb-4">
+                                    ${iconHtml}
+                                    ${tagHtml}
+                                </div>
+                                <h3 class="text-lg font-bold text-white truncate">${guild.name}</h3>
+                                <p class="text-xs text-gray-400 mt-1">ID: ${guild.id}</p>
+                            </div>
+                            <div class="mt-8">
+                                ${buttonHtml}
+                            </div>
+                        </div>
+                    `;
+                });
+
+                document.getElementById('stat-total').innerText = guilds.length;
+                document.getElementById('stat-active').innerText = activeCount;
+                document.getElementById('stat-invite').innerText = inviteCount;
+
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        async function logout() {
+            await fetch('/api/auth/logout');
+            window.location.href = '/login.html';
+        }
+
+        loadDashboard();
+    </script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+{
+  "name": "zetaverso-bot-website",
+  "version": "1.0.0",
+  "description": "Sito web e Dashboard di controllo ufficiale per ZetaVerso Bot",
+  "main": "js/server.js",
+  "scripts": {
+    "start": "node js/server.js",
+    "dev": "nodemon js/server.js"
+  },
+  "dependencies": {
+    "axios": "^1.6.8",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "discord.js": "^14.14.1",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-session": "^1.18.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}
