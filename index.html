@@ -1,34 +1,30 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="it" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ZetaVerso — Il bot Discord che protegge e gestisce la tua community</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0b0f19; color: #f3f4f6; }
-        .glass { background: rgba(17, 24, 39, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
-        .glow-purple { box-shadow: 0 0 30px -5px rgba(139, 92, 246, 0.5); }
-    </style>
+    <!-- Collega lo stile CSS dentro public/css/style.css -->
+    <link rel="stylesheet" href="public/css/style.css">
 </head>
-<body class="min-h-screen flex flex-col justify-between selection:bg-purple-500 selection:text-white">
+<body class="min-h-screen flex flex-col justify-between selection:bg-purple-500 selection:text-white bg-[#0b0f19]">
 
     <!-- NAVBAR -->
     <header class="glass sticky top-0 z-50 px-8 py-4 flex items-center justify-between border-b border-gray-800/50">
-        <div class="flex items-center space-x-3 cursor-pointer" onclick="window.location.href='index.html'">
+        <a href="/" class="flex items-center space-x-3 cursor-pointer">
             <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-purple-600 to-indigo-500 flex items-center justify-center font-bold text-xl glow-purple text-white">Z</div>
             <span class="text-xl font-extrabold tracking-wide text-white">ZetaVerso</span>
-        </div>
+        </a>
         <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-gray-300">
-            <a href="index.html" class="text-purple-400 font-semibold">Home</a>
+            <a href="/" class="text-purple-400 font-semibold">Home</a>
             <a href="#features" class="hover:text-purple-400 transition">Funzionalità</a>
-            <a href="dashboard.html" class="hover:text-purple-400 transition">Dashboard</a>
-            <a href="#support" class="hover:text-purple-400 transition">Supporto</a>
+            <a href="/public/dashboard.html" class="hover:text-purple-400 transition">Dashboard</a>
+            <a href="/public/docs.html" class="hover:text-purple-400 transition">Documentazione</a>
         </nav>
         <div>
-            <a href="login.html" class="bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2.5 rounded-xl font-semibold text-sm transition shadow-lg flex items-center space-x-2">
+            <a href="/public/login.html" class="bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2.5 rounded-xl font-semibold text-sm transition shadow-lg flex items-center space-x-2">
                 <i class="fab fa-discord"></i>
                 <span>Accedi</span>
             </a>
@@ -49,7 +45,7 @@
                 ZetaVerso integra sistemi di sicurezza impenetrabili (AntiRaid, AntiNuke, AntiSpam), ticket professionali, partnership pubbliche e una dashboard in tempo reale.
             </p>
             <div class="flex justify-center space-x-4">
-                <a href="login.html" class="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white px-8 py-4 rounded-xl font-bold transition shadow-xl glow-purple flex items-center space-x-2">
+                <a href="/public/login.html" class="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white px-8 py-4 rounded-xl font-bold transition shadow-xl glow-purple flex items-center space-x-2">
                     <i class="fab fa-discord"></i>
                     <span>Inizia Ora</span>
                 </a>
@@ -59,8 +55,8 @@
             </div>
         </section>
 
-        <!-- CARATTERISTICHE PRINCIPALI -->
-        <section id="features" class="py-20 px-6 max-w-7xl mx-auto border-t border-gray-800/40">
+        <!-- SEZIONE FUNZIONALITÀ (#features) -->
+        <section id="features" class="py-20 px-6 max-w-7xl mx-auto border-t border-gray-800/40 scroll-mt-24">
             <div class="text-center mb-16">
                 <h2 class="text-3xl font-extrabold text-white mb-3">Potenza e Sicurezza Senza Compromessi</h2>
                 <p class="text-gray-400 text-sm">Tutto ciò di cui la tua community ha bisogno racchiuso in un unico bot.</p>
@@ -89,9 +85,9 @@
     <footer class="glass py-8 px-6 text-center text-xs text-gray-500 flex flex-col md:flex-row justify-between items-center max-w-7xl mx-auto w-full border-t border-gray-800/40">
         <p>© 2026 ZetaVerso — Tutti i diritti riservati</p>
         <div class="flex space-x-6 mt-4 md:mt-0">
-            <a href="#" class="hover:text-gray-300">Supporto</a>
-            <a href="#" class="hover:text-gray-300">Documentazione</a>
-            <a href="#" class="hover:text-gray-300">Privacy Policy</a>
+            <a href="/public/docs.html" class="hover:text-gray-300">Documentazione</a>
+            <a href="/public/dashboard.html" class="hover:text-gray-300">Dashboard</a>
+            <a href="/public/login.html" class="hover:text-gray-300">Accedi</a>
         </div>
     </footer>
 </body>
